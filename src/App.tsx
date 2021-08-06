@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import "./App.css";
+import React from "react";
+
 import SearchBar from "./components/searchBar";
 import VideoGrid from "./components/VideoGrid";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import VideoResult from "./components/videoResult";
 function App() {
-	const [search, setSearch] = useState("");
+	// const [search, setSearch] = useState("");
 
 	return (
 		<>
+
 			<Router>
-				<Link to={`/`}>
-					<h1>Youtube</h1>
-				</Link>
-				<SearchBar search={search} setSearch={setSearch} />
+				
+				<SearchBar />
 				<Switch>
 					<Route
 						path={"/search/:searchId"}
 						render={({ match }) => {
-							return <VideoGrid search={match.params.searchId} />;
+							// return <VideoGrid search={match.params.searchId} />;
+              return <p>Save it to prevent data quota limit being reached - {match.params.searchId}</p>
 						}}
 					/>
 					<Route
@@ -28,6 +28,10 @@ function App() {
 								<VideoResult videoId={match.params.videoId} />
 							);
 						}}
+					/>
+          <Route
+						path={"/popular"}
+            render = {() => <VideoGrid search={true} /> }
 					/>
 				</Switch>
 			</Router>

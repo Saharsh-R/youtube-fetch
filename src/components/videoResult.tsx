@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import APIKEY from "./key";
 
 interface VideoUrl {
 	videoId: string;
@@ -29,16 +30,15 @@ interface VideoData {
 
 function VideoResult({ videoId }: VideoUrl) {
 	const [data, setData] = useState<VideoData | null>(null);
-	let apikey = "AIzaSyAElABuu8vnfABl4eKiIF6YX0xwNPnN1Os";
 
 	useEffect(() => {
 		fetch(
-			`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apikey}&part=snippet,contentDetails,statistics,status`
+			`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${APIKEY}&part=snippet,contentDetails,statistics,status`
 		)
 			.then((x) => x.json())
 			.then((r) => setData(r.items[0]));
-	}, [apikey, videoId]);
-	if (data === null) {
+	}, [ videoId]);
+	if (data == null) {
 		return <p>Loading</p>;
 	} else {
 		console.log(data);

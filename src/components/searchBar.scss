@@ -1,0 +1,38 @@
+.searchBar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+	background-color: lightgray;
+	padding: 10px;
+	width: 100%;
+}
+
+.heading {
+	text-align: center;
+	margin: 0;
+	color: black;
+	margin: 5px;
+}
+.hoverHeading {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.inputBarDiv {
+	flex: 1;
+	> form {
+		> input {
+			min-width: 300px;
+			font-size: x-large;
+		}
+		
+	}
+}
+
+.formInput {
+	display: flex;
+	justify-content: center;
+}

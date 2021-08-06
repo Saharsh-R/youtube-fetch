@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 
 export interface HasSearchInfo {
-	id: {
-		videoId: string;
-	};
+	id: string
 	snippet: {
 		publishedAt: string;
 		title: string;
@@ -27,8 +25,8 @@ interface VideoSearchProps {
 function VideoSearch({ videoData }: VideoSearchProps) {
 	return (
 		<>
-			<Link to={`/video/${videoData.id.videoId}`}>
-				<img src={videoData.snippet.thumbnails.high.url} alt="" />
+			<Link to={`/video/${videoData.id}`}>
+				<img src={`https://img.youtube.com/vi/${videoData.id}/mqdefault.jpg`} alt="" />
 			
 			<h2>{videoData.snippet.title}</h2>
             </Link>
