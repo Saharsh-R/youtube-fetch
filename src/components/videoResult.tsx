@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { convertToDateString, timeDifference, unSignedNumberWithCommas } from "./helperFunctions";
 import APIKEY from "./key";
+import "./videoResult.scss";
 
 interface VideoUrl {
 	videoId: string;
@@ -19,9 +21,12 @@ interface VideoData {
 				url: string;
 			};
 		};
+		channelTitle: string;
 	};
 	statistics: {
 		viewCount: string;
+		likeCount: string;
+		dislikeCount: string;
 	};
 	contentDetails: {
 		duration: string;
@@ -37,23 +42,46 @@ function VideoResult({ videoId }: VideoUrl) {
 		)
 			.then((x) => x.json())
 			.then((r) => setData(r.items[0]));
-	}, [ videoId]);
+	}, [videoId]);
 	if (data == null) {
 		return <p>Loading</p>;
 	} else {
-		console.log(data);
+		console.log(data.snippet.description)
 		return (
-			<div>
-				<iframe
-					title={data.snippet.title}
-					id="video"
-					src={`https://www.youtube.com/embed/${videoId}`}
-					frameBorder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen
-				></iframe>
-                <h2>{data.snippet.title}</h2>
-				<p>{data.snippet.description}</p>
+			<div className="fullVideoPlay">
+				<div className="videoContainer">
+					<iframe
+						title={data.snippet.title}
+						className="videoPlayer"
+						src={`https://www.youtube.com/embed/${videoId}`}
+						frameBorder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen
+					></iframe>
+				</div>
+				<div className="infoBelowPlayer">
+					<div className='infoTitle'>
+						<h2>{data.snippet.title}</h2>
+					</div>
+					<div className = 'statsBar'>
+						<div>
+							<div>👁️ {unSignedNumberWithCommas(data.statistics.viewCount)  } views</div>
+							<div>🗓️ {convertToDateString(data.snippet.publishedAt)}</div>
+						</div>
+						<div>
+							<div>👍   {unSignedNumberWithCommas(data.statistics.likeCount)}</div>
+							<div>👎   {unSignedNumberWithCommas(data.statistics.dislikeCount)}</div>
+						</div>
+					</div>
+					<div className='channelInfo'>
+						<div><strong>{data.snippet.channelTitle}</strong> uploaded this video <strong>{timeDifference(data.snippet.publishedAt) }</strong></div>
+<hr />					
+					</div>
+					<div className = 'videoDescriptionPlayer'>
+						<p>{data.snippet.description}</p>
+					</div>
+				</div>
+
 			</div>
 		);
 	}

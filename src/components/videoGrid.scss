@@ -1,0 +1,12 @@
+.videoGridResultWhole {
+    display: flex;
+    flex-direction: column;
+    
+    .resultDescription{
+        text-align: center;
+    }
+    .videoResultGrid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+    }
+}

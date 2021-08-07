@@ -1,0 +1,48 @@
+.fullVideoPlay {
+	> .videoContainer {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%;
+		> .videoPlayer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: 0;
+		}
+	}
+	> .infoBelowPlayer {
+		display: flex;
+		flex-direction: column;
+		padding: 20px;
+		> .infoTitle {
+			> h2 {
+				margin: 5px 0;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+		}
+		> .statsBar {
+			display: flex;
+			justify-content: space-between;
+			font-size: small;
+			color: rgb(82, 82, 82);
+			> div {
+				display: flex;
+				:first-child {
+					margin-right: 10px;
+				}
+			}
+		}
+		> .channelInfo {
+			margin-top: 10px;
+            font-size: large;
+		}
+		> .videoDescriptionPlayer {
+            white-space: pre-wrap;
+		}
+	}
+}

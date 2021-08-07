@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import APIKEY from "./key";
 import VideoSearch, { HasSearchInfo } from "./VideoSearch";
+import './videoGrid.scss'
 
 interface VideoProps {
 	search: string | true;
@@ -16,7 +17,7 @@ function VideoGrid({ search }: VideoProps) {
 					search === true ? "videos" : "search"
 				}?key=${APIKEY}&type=video&${
 					search === true ? "chart=mostPopular" : `q=${search}`
-				}&part=snippet&maxResults=1`
+				}&part=snippet&maxResults=15`
 			)
 				.then((r) => r.json())
 				.then((response) => {
@@ -30,25 +31,29 @@ function VideoGrid({ search }: VideoProps) {
 		}
 	}, [search]);
 
+
 	if (data.length === 0) {
 		return <></>;
 	}
 
 	return (
-		<>
-			{/* <h2>VideoGrid</h2> */}
-			{search === true ? (
-				<p> Here are the most popular videos </p>
-			) : (
-				<p>
-					Showing search results for -{" "}
-					<strong>{decodeURI(search)}</strong>
-				</p>
-			)}
-			{data.map((x) => (
-				<VideoSearch key={x.id} videoData={x} />
-			))}
-		</>
+		<div className='videoGridResultWhole'>
+			<div className = 'resultDescription'>
+				{search === true ? (
+					<p> Here are the most popular videos. </p>
+				) : (
+					<p>
+						Showing search results for -{" "}
+						<strong>{decodeURI(search)}</strong>
+					</p>
+				)}
+			</div>
+			<div className = 'videoResultGrid'>
+				{data.map((x) => (
+					<VideoSearch key={x.id} videoData={x} />
+				))}
+			</div>
+		</div>
 	);
 }
 
