@@ -9,16 +9,25 @@ function App() {
 
 	return (
 		<>
-
 			<Router>
-				
 				<SearchBar />
 				<Switch>
+					<Route exact path="/">
+						<p style={{ textAlign: "center" }}>
+							This is your home page!
+						</p>
+					</Route>
+
 					<Route
 						path={"/search/:searchId"}
 						render={({ match }) => {
-							// return <VideoGrid search={match.params.searchId} />;
-              return <p>Save it to prevent data quota limit being reached - {match.params.searchId}</p>
+							return <VideoGrid search={match.params.searchId} />;
+							// return (
+							// 	<p>
+							// 		Save it to prevent data quota limit being
+							// 		reached - {match.params.searchId}
+							// 	</p>
+							// );
 						}}
 					/>
 					<Route
@@ -29,9 +38,9 @@ function App() {
 							);
 						}}
 					/>
-          <Route
+					<Route
 						path={"/popular"}
-            render = {() => <VideoGrid search={true} /> }
+						render={() => <VideoGrid search={true} />}
 					/>
 				</Switch>
 			</Router>

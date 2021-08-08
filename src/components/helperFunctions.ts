@@ -45,7 +45,6 @@ export function YTDurationToSeconds(duration: string) {
 
 		let totalseconds = hours * 3600 + minutes * 60 + seconds;
 		let hhmmss = new Date(totalseconds * 1000).toISOString().substr(11, 8);
-        console.log(hhmmss)
 		if (hhmmss.substr(0, 2) === "00") {
 			let mmss = hhmmss.substr(3);
 			return mmss[0] === "0" ? mmss.substr(1) : mmss;
@@ -55,10 +54,21 @@ export function YTDurationToSeconds(duration: string) {
 }
 
 export function unSignedNumberWithCommas(x: string) {
-    return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function convertToDateString(x: string) {
+	return new Date(x).toDateString();
+}
 
-export function convertToDateString(x : string) {
-	return new Date(x).toDateString()
+export function numShortFormatter(numString : string) {
+	let num = parseInt(numString)
+    let l = ['', 'K', 'M', 'B', 'T']
+    for (let i = 0; i < 5; i ++){
+        if (num < 1000){
+            return Math.floor(num) + l[i]
+        }
+        num /= 1000
+    }
+    return num.toFixed(0) + 'T'
 }

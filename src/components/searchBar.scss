@@ -15,10 +15,10 @@
 	margin: 5px;
 }
 .hoverHeading {
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .inputBarDiv {
@@ -28,7 +28,6 @@
 			min-width: 300px;
 			font-size: x-large;
 		}
-		
 	}
 }
 
