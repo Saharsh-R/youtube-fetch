@@ -10,12 +10,12 @@ declare global {
 	}
 }
 
-interface GoogleSSOProps{
+export interface HasLoginDetails{
 	isLoggedIn: boolean, 
 	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function GoogleSSO({isLoggedIn, setIsLoggedIn} : GoogleSSOProps) {
+function GoogleSSO({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
 	const [auth, setAuth] = useState<any | null>(null);
 	const [googleUser, setGoogleUser] = useState<any | null>(null);
 
@@ -56,7 +56,7 @@ function GoogleSSO({isLoggedIn, setIsLoggedIn} : GoogleSSOProps) {
 
 		// Ensure everything is set before loading the script
 		loadGoogleScript(); // (Ref. 9)
-	}, []);
+	}, [setIsLoggedIn]); //it will never change. So do we need to include it here?
 
 	const handleSignInChange = (val: boolean) => {
 		//used for debugging.
@@ -79,54 +79,12 @@ function GoogleSSO({isLoggedIn, setIsLoggedIn} : GoogleSSOProps) {
 		);
 	};
 
-	const getPlaylists = () => {
-		return window.gapi.client.youtube.playlists
-			.list({
-				part: ["snippet,contentDetails"],
-				maxResults: 25,
-				mine: true,
-			})
-			.then(
-				function (response: any) {
-					// Handle the results here (response.result has the parsed body).
-					console.log(
-						"Response",
-						response.result.items.map((x: { id: any }) => x.id)
-					);
-				},
-				function (err: any) {
-					console.error("Execute error", err);
-				}
-			);
-	};
-
-	const getPlaylistVideos = () => {
-		return window.gapi.client.youtube.playlistItems
-			.list({
-				part: ["snippet,contentDetails"],
-				playlistId: "PL46AkwzLr8OkYzhPgICovKqtFzNcH4ohx",
-			})
-			.then(
-				function (response: any) {
-					// Handle the results here (response.result has the parsed body).
-					console.log(response.result.items);
-					console.log(
-						"Response",
-						response.result.items.map((x: { snippet: { title: any; resourceId: { videoId: any } } }) => ({
-							title: x.snippet.title,
-							videoId: x.snippet.resourceId.videoId,
-						}))
-					);
-				},
-				function (err: any) {
-					console.error("Execute error", err);
-				}
-			);
-	};
+	
 
 	const handleLogout = () => {
 		auth.signOut();
 	};
+
 	const showLoginStatus = () => {
 		console.log("Signed in -> ", auth.isSignedIn.get());
 

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import GoogleSSO, { HasLoginDetails } from "../googleAuth/GoogleSSO";
 import "./styling/searchBar.scss";
 
 
-function SearchBar() {
+
+function SearchBar({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
 	let history = useHistory();
 	const [input, setInput] = useState("");
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +40,8 @@ function SearchBar() {
 					<button type="submit">🔍</button>
 				</form>
 			</div>
+			<GoogleSSO isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>
+
 		</div>
 	);
 }
