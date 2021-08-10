@@ -17,7 +17,7 @@ function VideoGrid({ search }: VideoProps) {
 					search === true ? "videos" : "search"
 				}?key=${APIKEY}&type=video&${
 					search === true ? "chart=mostPopular" : `q=${search}`
-				}&part=snippet&maxResults=2`
+				}&part=snippet&maxResults=16`
 			)
 				.then((r) => r.json())
 				.then((response) => {
