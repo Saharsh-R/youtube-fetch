@@ -4,8 +4,8 @@ import {
 	timeDifference,
 	unSignedNumberWithCommas,
 } from "./helperFunctions";
-import APIKEY from "./key";
-import "./videoResult.scss";
+import {APIKEY} from "./key";
+import "./styling/videoResult.scss";
 
 interface VideoUrl {
 	videoId: string;

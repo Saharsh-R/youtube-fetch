@@ -1,3 +1,5 @@
+// import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
+
 export function timeDifference(previous: string) {
 	let current = new Date();
 	let prevDate = new Date(previous);
@@ -72,3 +74,4 @@ export function numShortFormatter(numString : string) {
     }
     return num.toFixed(0) + 'T'
 }
+

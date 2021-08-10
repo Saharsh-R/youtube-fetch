@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import "./searchBar.scss";
+import "./styling/searchBar.scss";
+
 
 function SearchBar() {
 	let history = useHistory();

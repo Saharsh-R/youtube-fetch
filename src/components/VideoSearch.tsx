@@ -5,9 +5,9 @@ import {
 	timeDifference,
 	YTDurationToSeconds,
 } from "./helperFunctions";
-import APIKEY from "./key";
+import {APIKEY} from "./key";
 import { VideoData } from "./videoResult";
-import "./videoSearch.scss";
+import "./styling/videoSearch.scss";
 
 type YoutubeApiSearchVsVideo = string | { videoId: string };
 export interface HasSearchInfo {

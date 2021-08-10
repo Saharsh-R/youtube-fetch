@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import APIKEY from "./key";
+import {APIKEY} from "./key";
 import VideoSearch, { HasSearchInfo } from "./VideoSearch";
-import "./videoGrid.scss";
+import "./styling/videoGrid.scss";
 
 interface VideoProps {
 	search: string | true;
@@ -17,7 +17,7 @@ function VideoGrid({ search }: VideoProps) {
 					search === true ? "videos" : "search"
 				}?key=${APIKEY}&type=video&${
 					search === true ? "chart=mostPopular" : `q=${search}`
-				}&part=snippet&maxResults=16`
+				}&part=snippet&maxResults=2`
 			)
 				.then((r) => r.json())
 				.then((response) => {
