@@ -2,9 +2,12 @@ import SearchBar from "./components/searchBar";
 import VideoGrid from "./components/VideoGrid";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import VideoResult from "./components/videoResult";
-import GoogleSSO from "./GoogleSSO";
+import GoogleSSO from "./googleAuth/GoogleSSO";
+import { useState } from "react";
 
 function App() {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 	return (
 		<>
 			<Router>
@@ -12,7 +15,7 @@ function App() {
 				<Switch>
 					<Route exact path="/">
 						<p style={{ textAlign: "center" }}>This is your home page!</p>
-						<GoogleSSO />
+						<GoogleSSO isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>
 					</Route>
 					<Route
 						path={"/search/:searchId"}

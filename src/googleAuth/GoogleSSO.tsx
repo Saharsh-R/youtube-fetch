@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { CLIENTID } from "./components/key";
-import { loadGoogleScript } from "./loadGoogleScript";
-
+import { CLIENTID } from "../components/key";
+import { loadGoogleScript } from "../loadGoogleScript";
+import "./googleLogin.scss";
+import googleImage from './googleLoginButton.svg'
 declare global {
 	interface Window {
 		onGoogleScriptLoad: any;
@@ -9,8 +10,12 @@ declare global {
 	}
 }
 
-function GoogleSSO() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+interface GoogleSSOProps{
+	isLoggedIn: boolean, 
+	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function GoogleSSO({isLoggedIn, setIsLoggedIn} : GoogleSSOProps) {
 	const [auth, setAuth] = useState<any | null>(null);
 	const [googleUser, setGoogleUser] = useState<any | null>(null);
 
@@ -54,6 +59,7 @@ function GoogleSSO() {
 	}, []);
 
 	const handleSignInChange = (val: boolean) => {
+		//used for debugging.
 		console.log("Login status Changed to", val);
 		setIsLoggedIn(val);
 	};
@@ -131,18 +137,30 @@ function GoogleSSO() {
 		// console.log(window.gapi.auth2.getAuthInstance());
 	};
 
-	return (
-		<div>
-			<p>User Logged in - {isLoggedIn.toString()}</p>
+	const handleLoginStatusChange = () => {
+		if (isLoggedIn) {
+			handleLogout()
+		} else {
+			handleLogin()
+		}
+	}
 
-			<button onClick={handleLogin}>Sign in</button>
-			{/* <button onClick={loadClient}>Load Client</button> */}
-			<button onClick={getPlaylists}>Get playlists</button>
-			<button onClick={handleLogout}>Logout</button>
-			<button onClick={showLoginStatus}>Show auth status</button>
-			<button onClick={getPlaylistVideos}>Get videos</button>
+	return (
+		<div className="mainLoginContainer" onClick = {handleLoginStatusChange}>
+			{isLoggedIn ? (
+				<>
+					<img className="imgLogin" src={googleUser.getBasicProfile().getImageUrl()} alt="" />
+					<div className="loginLogoutText" style= {{color:'red'}}>Logout</div>
+				</>
+			) : (
+				<>
+					<img className="imgLogin" src={googleImage} alt="" />
+					<div className="loginLogoutText">Login</div>
+				</>
+			)}
 		</div>
 	);
+
 }
 
 export default GoogleSSO;
