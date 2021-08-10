@@ -30,29 +30,22 @@ function GoogleSSO() {
 	useEffect(() => {
 		// Window.gapi is available at this point
 		window.onGoogleScriptLoad = () => {
-			// (Ref. 1)
-
-			//   const _gapi = window.gapi; // (Ref. 2)
-			//   setGapi(_gapi);
-
 			window.gapi.load("client:auth2", function () {
 				window.gapi.auth2.init({ client_id: CLIENTID }).then(() => {
-					// showLoginStatus();
 					let initauth = window.gapi.auth2.getAuthInstance();
 
 					initauth.isSignedIn.listen(setIsLoggedIn);
-					initauth.currentUser.listen(setGoogleUser)
-					let initLoginStatus = initauth.isSignedIn.get()
-					setIsLoggedIn(initLoginStatus);
+					initauth.currentUser.listen(setGoogleUser);
+					let initLoginStatus = initauth.isSignedIn.get();
 
-					let initUser = initauth.currentUser.get()
+					let initUser = initauth.currentUser.get();
 					setGoogleUser(initUser);
-					
 
 					setAuth(initauth);
-					loadClient();
+					loadClient().then(() => {
+						setIsLoggedIn(initLoginStatus); //moved to here to ensure user makes an api call only after the libraries are loaded.
+					});
 				});
-				// renderSigninButton(window.gapi); // (Ref. 6)
 			});
 		};
 
@@ -64,11 +57,10 @@ function GoogleSSO() {
 		console.log("Login status Changed to", val);
 		setIsLoggedIn(val);
 	};
-	const handleUserChange = (user: any) =>  {
-		console.log('user changed', user)
-		setGoogleUser(user)
-
-	}
+	const handleUserChange = (user: any) => {
+		console.log("user changed", user);
+		setGoogleUser(user);
+	};
 
 	const handleLogin = () => {
 		auth.signIn({ scope: "https://www.googleapis.com/auth/youtube" }).then(
