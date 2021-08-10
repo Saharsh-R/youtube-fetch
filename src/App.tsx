@@ -2,6 +2,7 @@ import SearchBar from "./components/searchBar";
 import VideoGrid from "./components/VideoGrid";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import VideoResult from "./components/videoResult";
+import GoogleSSO from "./GoogleSSO";
 
 function App() {
 	return (
@@ -11,6 +12,7 @@ function App() {
 				<Switch>
 					<Route exact path="/">
 						<p style={{ textAlign: "center" }}>This is your home page!</p>
+						<GoogleSSO />
 					</Route>
 					<Route
 						path={"/search/:searchId"}
