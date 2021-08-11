@@ -10,7 +10,7 @@ function PlaylistVideosDisplay({ playlistId }: HasPlaylistId) {
 
 	useEffect(() => {
 		getPlaylistVideos(playlistId).then((x: any) => setVideoItems(x));
-	}, []);
+	}, [playlistId]);
 
 	return (
 		<div style={{ padding: "40px" }}>
