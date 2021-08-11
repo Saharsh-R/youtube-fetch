@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
 	convertToDateString,
+	getVideoDetailsWithoutClientLoad,
 	timeDifference,
 	unSignedNumberWithCommas,
 } from "./helperFunctions";
-import {APIKEY} from "../googleAuth/key";
 import "./styling/videoResult.scss";
 
 interface VideoUrl {
@@ -41,12 +41,8 @@ function VideoResult({ videoId }: VideoUrl) {
 	const [data, setData] = useState<VideoData | null>(null);
 
 	useEffect(() => {
-		console.log(`%c Fetching for player, videoid -> ${videoId}`, "color: MediumSpringGreen");
-		fetch(
-			`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${APIKEY}&part=snippet,contentDetails,statistics,status`
-		)
-			.then((x) => x.json())
-			.then((r) => setData(r.items[0]));
+		getVideoDetailsWithoutClientLoad(videoId).then(x => setData(x[0]))
+	
 	}, [videoId]);
 	if (data == null) {
 		return <p>Loading</p>;

@@ -1,5 +1,7 @@
 // import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 
+import { APIKEY } from "../googleAuth/key";
+
 export function timeDifference(previous: string) {
 	let current = new Date();
 	let prevDate = new Date(previous);
@@ -63,15 +65,39 @@ export function convertToDateString(x: string) {
 	return new Date(x).toDateString();
 }
 
-export function numShortFormatter(numString : string) {
-	let num = parseInt(numString)
-    let l = ['', 'K', 'M', 'B', 'T']
-    for (let i = 0; i < 5; i ++){
-        if (num < 1000){
-            return Math.floor(num) + l[i]
-        }
-        num /= 1000
-    }
-    return num.toFixed(0) + 'T'
+export function numShortFormatter(numString: string) {
+	let num = parseInt(numString);
+	let l = ["", "K", "M", "B", "T"];
+	for (let i = 0; i < 5; i++) {
+		if (num < 1000) {
+			return Math.floor(num) + l[i];
+		}
+		num /= 1000;
+	}
+	return num.toFixed(0) + "T";
 }
 
+export function getVideoDetails(id: string) {
+	console.log(`%c USING gapi, videoid -> ${id}`, "color: white");
+	return window.gapi.client.youtube.videos
+		.list({
+			part: ["snippet,contentDetails,statistics,status"],
+			id: [id],
+		})
+		.then(
+			function (response: { result: any }) {
+				// Handle the results here (response.result has the parsed body).
+				return response.result.items;
+			},
+			function (err: any) {
+				console.error("Execute error", err);
+			}
+		);
+}
+
+export function getVideoDetailsWithoutClientLoad(id: string) {
+	console.log(`%c Fetching for player without client load, videoid -> ${id}`, "color: MediumSpringGreen");
+	return fetch(`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${APIKEY}&part=snippet,contentDetails,statistics,status`)
+		.then((x) => x.json())
+		.then((r) => r.items);
+}

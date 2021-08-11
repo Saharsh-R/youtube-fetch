@@ -1,3 +1,5 @@
+import { PlaylistVideo, UserPlaylist } from "./PlaylistInterfaces";
+
 export function getPlaylists() {
 	return window.gapi.client.youtube.playlists
 		.list({
@@ -9,11 +11,7 @@ export function getPlaylists() {
 			function (response: any) {
 				// Handle the results here (response.result has the parsed body).
 
-				return response.result.items.map((x: { id: any; snippet: { title: any; description: any } }) => ({
-					id: x.id,
-					title: x.snippet.title,
-					description: x.snippet.description,
-				}));
+				return response.result.items as UserPlaylist[];
 			},
 			function (err: any) {
 				console.error("Execute error", err);
@@ -31,15 +29,10 @@ export function getPlaylistVideos(playlistId: string) {
 			function (response: any) {
 				// Handle the results here (response.result has the parsed body).
 
-				return response.result.items.map((x: { snippet: { title: any; resourceId: { videoId: any } } }) => ({
-					title: x.snippet.title,
-					videoId: x.snippet.resourceId.videoId,
-				}));
+				return response.result.items as PlaylistVideo[];
 			},
 			function (err: any) {
 				console.error("Execute error", err);
 			}
 		);
 }
-
-// export const a = 'd'
