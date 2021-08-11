@@ -15,7 +15,7 @@ function App() {
 				<SearchBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 				<Switch>
 					<Route exact path="/">
-						<p style={{ textAlign: "center" }}>This is your home page!</p>
+						{/* <p style={{ textAlign: "center" }}>This is your home page!</p> */}
 						{/* below line run only when user is logged in */}
 						{isLoggedIn ? <PlaylistGrid /> : <p>Log in to see your playlists here!</p> } 
 					</Route>

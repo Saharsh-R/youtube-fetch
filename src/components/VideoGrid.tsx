@@ -17,7 +17,7 @@ function VideoGrid({ search }: VideoProps) {
 			fetch(
 				`https://www.googleapis.com/youtube/v3/${search === true ? "videos" : "search"}?key=${APIKEY}&type=video&${
 					search === true ? "chart=mostPopular" : `q=${search}`
-				}&part=snippet&maxResults=16`
+				}&part=snippet&maxResults=20`
 			)
 				.then((r) => r.json())
 				.then((response) => {

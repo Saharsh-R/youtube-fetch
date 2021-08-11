@@ -9,7 +9,10 @@ export interface UserPlaylist {
 		thumbnails: {
 			default: {
 				url: string;
-			};
+			},
+			high: {
+				url: string;
+			}
 		};
 		channelTitle: string; //saharsh rathi
 	};
