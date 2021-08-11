@@ -38,8 +38,8 @@ function PlaylistGrid() {
 								<h2 className = 'playListGridTitle'>{x.snippet.title}</h2>
 							</div>
 							<div className = 'playListGridCount'>This playlist has <strong>{x.contentDetails.itemCount} vidoes</strong></div>
-							<hr />
-							<p className = 'playListGridDescription'>{x.snippet.description}</p>
+							{x.snippet.description && <p className = 'playListGridDescription'>{x.snippet.description}</p> }
+							
 						</div>
 					);
 				})}
