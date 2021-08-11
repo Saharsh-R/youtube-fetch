@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {APIKEY} from "./key";
+import {APIKEY} from "../googleAuth/key";
 import VideoSearch, { HasSearchInfo } from "./VideoSearch";
 import "./styling/videoGrid.scss";
 

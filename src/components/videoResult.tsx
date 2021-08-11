@@ -4,7 +4,7 @@ import {
 	timeDifference,
 	unSignedNumberWithCommas,
 } from "./helperFunctions";
-import {APIKEY} from "./key";
+import {APIKEY} from "../googleAuth/key";
 import "./styling/videoResult.scss";
 
 interface VideoUrl {

@@ -5,7 +5,7 @@ import {
 	timeDifference,
 	YTDurationToSeconds,
 } from "./helperFunctions";
-import {APIKEY} from "./key";
+import {APIKEY} from "../googleAuth/key";
 import { VideoData } from "./videoResult";
 import "./styling/videoSearch.scss";
 

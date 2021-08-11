@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { CLIENTID } from "../components/key";
+import { APIKEY, CLIENTID } from "./key";
 import { loadGoogleScript } from "../loadGoogleScript";
 import "./googleLogin.scss";
-import googleImage from './googleLoginButton.svg'
+import googleImage from "./googleLoginButton.svg";
 declare global {
 	interface Window {
 		onGoogleScriptLoad: any;
@@ -10,16 +10,17 @@ declare global {
 	}
 }
 
-export interface HasLoginDetails{
-	isLoggedIn: boolean, 
-	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+export interface HasLoginDetails {
+	isLoggedIn: boolean;
+	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function GoogleSSO({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
+function GoogleSSO({ isLoggedIn, setIsLoggedIn }: HasLoginDetails) {
 	const [auth, setAuth] = useState<any | null>(null);
 	const [googleUser, setGoogleUser] = useState<any | null>(null);
 
 	function loadClient() {
+		window.gapi.client.setApiKey(APIKEY);
 		return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest").then(
 			function () {
 				console.log("GAPI client loaded for API");
@@ -44,6 +45,7 @@ function GoogleSSO({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
 					let initLoginStatus = initauth.isSignedIn.get();
 
 					let initUser = initauth.currentUser.get();
+					// console.log(initUser.getBasicProfile())
 					setGoogleUser(initUser);
 
 					setAuth(initauth);
@@ -58,15 +60,16 @@ function GoogleSSO({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
 		loadGoogleScript(); // (Ref. 9)
 	}, [setIsLoggedIn]); //it will never change. So do we need to include it here?
 
-	const handleSignInChange = (val: boolean) => {
-		//used for debugging.
-		console.log("Login status Changed to", val);
-		setIsLoggedIn(val);
-	};
-	const handleUserChange = (user: any) => {
-		console.log("user changed", user);
-		setGoogleUser(user);
-	};
+	// const handleSignInChange = (val: boolean) => {
+	// 	//used for debugging.
+	// 	console.log("Login status Changed to", val);
+	// 	setIsLoggedIn(val);
+	// };
+
+	// const handleUserChange = (user: any) => {
+	// 	console.log("user changed", user);
+	// 	setGoogleUser(user);
+	// };
 
 	const handleLogin = () => {
 		auth.signIn({ scope: "https://www.googleapis.com/auth/youtube" }).then(
@@ -79,36 +82,36 @@ function GoogleSSO({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
 		);
 	};
 
-	
-
 	const handleLogout = () => {
 		auth.signOut();
 	};
 
-	const showLoginStatus = () => {
-		console.log("Signed in -> ", auth.isSignedIn.get());
+	// const showLoginStatus = () => {
+	// 	console.log("Signed in -> ", auth.isSignedIn.get());
 
-		if (isLoggedIn) {
-			console.log(googleUser.getBasicProfile().getName());
-			console.log(googleUser.getBasicProfile().getEmail());
-		}
-		// console.log(window.gapi.auth2.getAuthInstance());
-	};
+	// 	if (isLoggedIn) {
+	// 		console.log(googleUser.getBasicProfile().getName());
+	// 		console.log(googleUser.getBasicProfile().getEmail());
+	// 	}
+	// 	// console.log(window.gapi.auth2.getAuthInstance());
+	// };
 
 	const handleLoginStatusChange = () => {
 		if (isLoggedIn) {
-			handleLogout()
+			handleLogout();
 		} else {
-			handleLogin()
+			handleLogin();
 		}
-	}
+	};
 
 	return (
-		<div className="mainLoginContainer" onClick = {handleLoginStatusChange}>
+		<div className="mainLoginContainer" onClick={handleLoginStatusChange}>
 			{isLoggedIn ? (
 				<>
 					<img className="imgLogin" src={googleUser.getBasicProfile().getImageUrl()} alt="" />
-					<div className="loginLogoutText" style= {{color:'red'}}>Logout</div>
+					<div className="loginLogoutText" style={{ color: "red" }}>
+						Logout
+					</div>
 				</>
 			) : (
 				<>
@@ -118,7 +121,6 @@ function GoogleSSO({isLoggedIn, setIsLoggedIn} : HasLoginDetails) {
 			)}
 		</div>
 	);
-
 }
 
 export default GoogleSSO;
